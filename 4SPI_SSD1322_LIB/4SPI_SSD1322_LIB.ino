@@ -6,12 +6,8 @@ void setup() {
   
   initSPIandOLED();
 
-  while(1) {
-    if(i == 16) i = 0;
-    sendCommand(MASTER_CONTRAST_CURR_CTRL);
-    sendData(i++);
-    delay(500);
-  };
+  sendCommand(SET_MUX_RATIO);
+  sendData(15);
 
   
   //sendData(0xC0);

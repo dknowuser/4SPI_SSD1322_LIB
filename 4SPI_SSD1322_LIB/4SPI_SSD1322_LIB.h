@@ -38,6 +38,8 @@
 #define SET_VCOMH                  0xBE
 #define SET_CONTRAST_CURRENT       0xC1
 #define MASTER_CONTRAST_CURR_CTRL  0xC7
+#define SET_MUX_RATIO              0xCA
+#define SET_COMMAND_LOCK           0xFD
 
 
 // Delay
