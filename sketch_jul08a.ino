@@ -20,7 +20,7 @@ void setup() {
   //digitalWrite(RES, LOW);
   //delay(del);
   
-  SPI.setClockDivider(4);
+  SPI.setClockDivider(1);
   SPI.begin();
   SPI.setBitOrder(MSBFIRST);
 
