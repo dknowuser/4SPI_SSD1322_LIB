@@ -2,17 +2,17 @@
 
 void setup() {
   // put your setup code here, to run once:
-  unsigned int i = 0;
+  unsigned int i = 0x50;
   
   initSPIandOLED();
+  //sendCommand(WRITE_RAM);
 
-  sendCommand(SET_MUX_RATIO);
-  sendData(15);
+  while(1) {
+    if(i == 127) i = 0x50;
+    setPoint(0, i++, 0x0);
+    //delay(100);
+  };
 
-  
-  //sendData(0xC0);
-  ///sendData(1);
-  //sendCommand(EXIT_PARTIAL);
 }
 
 void loop() {

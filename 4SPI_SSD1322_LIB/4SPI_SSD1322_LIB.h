@@ -3,6 +3,8 @@
 
 #include <SPI.h>
 
+// (0; 0) is at upper right corner
+
 // Arduino Mega 2560 pin defines
 #define RES       10
 #define OLED_CS   11
@@ -53,5 +55,11 @@ void sendCommand(const char value);
 
 // Function for sending data to SSD1322
 void sendData(const char value);
+
+// Function for clearing screen
+void clearScreen(const bool whiteBackground);
+
+// Function for setting point at (x; y) with desired color
+void setPoint(const unsigned int x, const unsigned int y, const unsigned int color);
 
 #endif
