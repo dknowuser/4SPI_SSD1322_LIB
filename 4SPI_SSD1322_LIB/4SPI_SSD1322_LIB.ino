@@ -2,16 +2,18 @@
 
 void setup() {
   // put your setup code here, to run once:
-  unsigned int i = 0x50;
+  unsigned int i = 0x0;
   
   initSPIandOLED();
   //sendCommand(WRITE_RAM);
 
   while(1) {
-    if(i == 127) i = 0x50;
+    if(i == 127) i = 0x0;
     setPoint(0, i++, 0x0);
     //delay(100);
   };
+
+  //clearScreen(0x0f);
 
 }
 

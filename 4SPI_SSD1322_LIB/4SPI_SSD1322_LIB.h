@@ -46,6 +46,8 @@
 
 // Delay
 #define DEL       500
+#define COLUMNS   480
+#define ROWS      128
 
 // Function for SPI and OLED initialization
 void initSPIandOLED(void);
@@ -57,7 +59,7 @@ void sendCommand(const char value);
 void sendData(const char value);
 
 // Function for clearing screen
-void clearScreen(const bool whiteBackground);
+void clearScreen(const int whiteBackground);
 
 // Function for setting point at (x; y) with desired color
 void setPoint(const unsigned int x, const unsigned int y, const unsigned int color);

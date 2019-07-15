@@ -53,7 +53,19 @@ void sendData(const char value)
 }
 
 void clearScreen(const int backgroundColor) {
+  unsigned int i = 0;
   
+  sendCommand(SET_COLUMN_ADDRESS);
+  sendData(0);
+  sendData(119);
+
+  sendCommand(SET_ROW_ADDRESS);
+  sendData(0);
+  sendData(ROWS - 1);
+
+  sendCommand(WRITE_RAM);
+  for(i = 0; i < (COLUMNS / 2) * ROWS; i++)
+    sendData(backgroundColor | (backgroundColor << 4));
 }
 
 void setPoint(const unsigned int x, const unsigned int y, const unsigned int color) {
