@@ -61,7 +61,13 @@ void sendData(const char value);
 // Function for clearing screen
 void clearScreen(const int whiteBackground);
 
-// Function for setting point at (x; y) with desired color
-void setPoint(const unsigned int x, const unsigned int y, const unsigned int color);
+// Function for setting segment pair at (x; y) with desired color
+// x is offset of 1st segment pair
+// Lower half of color parameter is color of 1st pixel
+// Higher half of color parameter is color of 2nd pixel
+// color1 is color for 1st segment pair
+// color2 is color for 2nd segment pair
+void setSegs(const unsigned int x, const unsigned int y, const unsigned int color1,
+        const unsigned int color2);
 
 #endif

@@ -68,26 +68,19 @@ void clearScreen(const int backgroundColor) {
     sendData(backgroundColor | (backgroundColor << 4));
 }
 
-void setPoint(const unsigned int x, const unsigned int y, const unsigned int color) {
+void setSegs(const unsigned int x, const unsigned int y, const unsigned int color1,
+      const unsigned int color2) {
   unsigned int i = 0;
 
-  /*sendCommand(SET_COLUMN_ADDRESS);
-  sendData(x / 2);
-  sendData(119);*/
+  sendCommand(SET_COLUMN_ADDRESS);
+  sendData(x);
+  sendData(119);
 
   sendCommand(SET_ROW_ADDRESS);
   sendData(y);
   sendData(127);
 
   sendCommand(WRITE_RAM);
-
-  while(i < 512) {
-  /*if(x & 2)  
-    sendData((color << 4));
-  else
-    sendData((color));*/
-  sendData(color | (color << 4));
-
-    i++;
-  };
+  sendData(color1);
+  sendData(color2);
 }

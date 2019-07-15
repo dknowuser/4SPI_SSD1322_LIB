@@ -5,16 +5,9 @@ void setup() {
   unsigned int i = 0x0;
   
   initSPIandOLED();
-  //sendCommand(WRITE_RAM);
+  clearScreen(0x00);
 
-  while(1) {
-    if(i == 127) i = 0x0;
-    setPoint(0, i++, 0x0);
-    //delay(100);
-  };
-
-  //clearScreen(0x0f);
-
+  setSegs(50, 50, 0xF0, 0x00);
 }
 
 void loop() {
