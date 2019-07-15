@@ -7,9 +7,12 @@ void setup() {
   initSPIandOLED();
 
   while(1) {
-    if(i == 256) i = 0;
-    sendCommand(i++);
+    if(i == 128) i = 0;
+    sendCommand(SET_OFFSET);
+    sendData(i++);
+    delay(10);
   };
+  //sendData(119);
 }
 
 void loop() {
