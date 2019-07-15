@@ -16,6 +16,9 @@ void initSPIandOLED(void)
 
   sendCommand(SLEEP_MODE_OFF);
   sendCommand(ENABLE_GR_SCL_MODE);
+
+  //sendCommand(SET_PHASE_LENGTH);
+  //sendData(0xFF); // ??
 }
 
 void sendCommand(const char value)

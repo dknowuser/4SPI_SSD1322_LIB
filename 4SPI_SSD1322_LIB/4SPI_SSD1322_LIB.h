@@ -11,18 +11,34 @@
 #define OLED_SCLK 52
 
 //OLED commands
-#define ENABLE_GR_SCL_MODE  0x00
-#define SET_COLUMN_ADDRESS  0x15
-#define WRITE_RAM           0x5C
-#define READ_RAM            0x5D
-#define SET_ROW_ADDRESS     0x75
-#define REMAP_DUAL_COM      0xA0
-#define SET_START_LINE      0xA1 // May be used for vertical scrolling
-#define SET_OFFSET          0xA2 // May be used for vertical scrolling
+#define ENABLE_GR_SCL_MODE      0x00
+#define SET_COLUMN_ADDRESS      0x15
+#define WRITE_RAM               0x5C
+#define READ_RAM                0x5D
+#define SET_ROW_ADDRESS         0x75
+#define REMAP_DUAL_COM          0xA0
+#define SET_START_LINE          0xA1 // May be used for vertical scrolling
+#define SET_OFFSET              0xA2 // May be used for vertical scrolling
+#define DISPLAY_OFF             0xA4
+#define DISPLAY_ON              0xA5
+#define DISPLAY_NORMAL          0xA6
+#define DISPLAY_INVERSE         0xA7
+#define ENABLE_PARTIAL          0xA8
+#define EXIT_PARTIAL            0xA9
+#define FUNC_SELECTION          0xAB
+#define SLEEP_MODE_ON           0xAE
+#define SLEEP_MODE_OFF          0xAF
+#define SET_PHASE_LENGTH        0xB1
+#define SET_CLK_DIV_OSC_FREQ    0xB3
+#define SET_GPIO                0xB5
+#define SET_SECOND_PRECH_PER    0xB6
+#define SET_GR_SCL_TABLE        0xB8
+#define SELECT_GR_SCL_TABLE     0xB9
+#define SET_PRECHARGE_VLTG      0xBB
+#define SET_VCOMH                  0xBE
+#define SET_CONTRAST_CURRENT       0xC1
+#define MASTER_CONTRAST_CURR_CTRL  0xC7
 
-
-#define SLEEP_MODE_ON 0xAE
-#define SLEEP_MODE_OFF 0xAF
 
 // Delay
 #define DEL       500

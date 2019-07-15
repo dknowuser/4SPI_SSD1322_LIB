@@ -7,12 +7,16 @@ void setup() {
   initSPIandOLED();
 
   while(1) {
-    if(i == 128) i = 0;
-    sendCommand(SET_OFFSET);
+    if(i == 16) i = 0;
+    sendCommand(MASTER_CONTRAST_CURR_CTRL);
     sendData(i++);
-    delay(10);
+    delay(500);
   };
-  //sendData(119);
+
+  
+  //sendData(0xC0);
+  ///sendData(1);
+  //sendCommand(EXIT_PARTIAL);
 }
 
 void loop() {
