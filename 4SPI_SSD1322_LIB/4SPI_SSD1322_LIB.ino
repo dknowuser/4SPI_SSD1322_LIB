@@ -5,9 +5,13 @@ void setup() {
   unsigned int i = 0x0;
   
   initSPIandOLED();
-  clearScreen(0x00);
 
-  setSegs(50, 50, 0xF0, 0x00);
+  while(1) {
+    i = i & 0x0F;
+    clearScreen(i++);
+  };
+
+  //setSegs(90, 50, 0xF0, 0x00);
 }
 
 void loop() {

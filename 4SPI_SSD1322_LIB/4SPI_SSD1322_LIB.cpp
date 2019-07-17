@@ -8,11 +8,12 @@ void initSPIandOLED(void)
   pinMode(OLED_SDIN, OUTPUT);
   pinMode(RES, OUTPUT);
   
-  SPI.setClockDivider(128);
-  SPI.begin();
-  SPI.setBitOrder(MSBFIRST);
+  //SPI.setClockDivider(1);
+  //SPI.setBitOrder(MSBFIRST);
+  SPI.beginTransaction(SPISettings(MAX_SPI_SPEED, MSBFIRST, SPI_MODE0));
+  SPI.begin();  
 
-  digitalWrite(RES, HIGH);
+  PORTB |= RES_PIN_SET; // RES = 1
 
   sendCommand(SLEEP_MODE_OFF);
   sendCommand(ENABLE_GR_SCL_MODE);
@@ -34,22 +35,28 @@ void initSPIandOLED(void)
   sendData(0x9C);
   sendData(0xA8);
   sendData(0xB4);
+
+  sendCommand(SET_PHASE_LENGTH);
+  sendData(0x32);
+
+  //sendCommand(SET_VCOMH);
+  //sendData(0x07);
 }
 
 void sendCommand(const char value)
 {
-  digitalWrite(OLED_DC, LOW);
-  digitalWrite(OLED_CS, LOW);
+  PORTB &= OLED_DC_CLEAR;
+  PORTB &= OLED_CS_CLEAR;
   SPI.transfer(value);
-  digitalWrite(OLED_CS, HIGH);
+  PORTB |= OLED_CS_SET;
 }
 
 void sendData(const char value)
 {
-  digitalWrite(OLED_DC, HIGH);
-  digitalWrite(OLED_CS, LOW);
+  PORTB |= OLED_DC_SET;
+  PORTB &= OLED_CS_CLEAR;
   SPI.transfer(value);
-  digitalWrite(OLED_CS, HIGH);
+  PORTB |= OLED_CS_SET;
 }
 
 void clearScreen(const int backgroundColor) {

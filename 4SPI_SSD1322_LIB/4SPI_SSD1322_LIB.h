@@ -12,6 +12,12 @@
 #define OLED_SDIN 51
 #define OLED_SCLK 52
 
+#define RES_PIN_SET B00010000
+#define OLED_CS_SET   B00100000
+#define OLED_CS_CLEAR B11011111
+#define OLED_DC_SET   B01000000
+#define OLED_DC_CLEAR B10111111
+
 //OLED commands
 #define ENABLE_GR_SCL_MODE      0x00
 #define SET_COLUMN_ADDRESS      0x15
@@ -43,11 +49,10 @@
 #define SET_MUX_RATIO              0xCA
 #define SET_COMMAND_LOCK           0xFD
 
-
-// Delay
-#define DEL       500
+#define DEL       500 // Delay
 #define COLUMNS   480
 #define ROWS      128
+#define MAX_SPI_SPEED 16000000
 
 // Function for SPI and OLED initialization
 void initSPIandOLED(void);
@@ -59,7 +64,7 @@ void sendCommand(const char value);
 void sendData(const char value);
 
 // Function for clearing screen
-void clearScreen(const int whiteBackground);
+void clearScreen(const int backgroundColor);
 
 // Function for setting segment pair at (x; y) with desired color
 // x is offset of 1st segment pair
@@ -69,5 +74,5 @@ void clearScreen(const int whiteBackground);
 // color2 is color for 2nd segment pair
 void setSegs(const unsigned int x, const unsigned int y, const unsigned int color1,
         const unsigned int color2);
-
+        
 #endif
