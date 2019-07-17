@@ -58,10 +58,11 @@
 void initSPIandOLED(void);
 
 // Function for sending command to SSD1322
-void sendCommand(const char value);
+void sendCommand(const byte value);
 
-// Function for sending data to SSD1322
-void sendData(const char value);
+// Functions for sending data to SSD1322
+void sendDataByte(const byte value);
+void sendDataWord(const word value);
 
 // Function for clearing screen
 void clearScreen(const int backgroundColor);

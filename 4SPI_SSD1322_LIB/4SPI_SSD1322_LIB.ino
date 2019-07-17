@@ -9,6 +9,7 @@ void setup() {
   while(1) {
     i = i & 0x0F;
     clearScreen(i++);
+    //delay(100);
   };
 
   //setSegs(90, 50, 0xF0, 0x00);
