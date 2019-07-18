@@ -6,13 +6,17 @@ void setup() {
   
   initSPIandOLED();
 
-  while(1) {
-    i = i & 0x0F;
-    clearScreen(i++);
-    delay(500);
-  };
+  clearScreen(0x00);
 
-  //setSegs(90, 50, 0xF0, 0x00);
+  for(i = 0; i < 100; i++)
+    setSegs(i, 50, 0xF0, 0xF0);
+
+  while(1) {
+    i = i % 128;
+    scrollOLED(i);
+    i += 4;
+    delay(20);
+  };
 }
 
 void loop() {

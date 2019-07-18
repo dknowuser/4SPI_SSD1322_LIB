@@ -17,7 +17,6 @@ void initSPIandOLED(void)
   sendCommand(ENABLE_GR_SCL_MODE);
   
   sendCommand(SET_GR_SCL_TABLE);
-
   sendDataWord(0x000C);
   sendDataWord(0x1824);
   sendDataWord(0x303C);
@@ -26,6 +25,22 @@ void initSPIandOLED(void)
   sendDataWord(0x7884);
   sendDataWord(0x909C);
   sendDataWord(0xA8B4);
+}
+
+void inverseOLED(void) 
+{
+  sendCommand(DISPLAY_INVERSE);
+}
+
+void normalOLED(void)
+{
+  sendCommand(DISPLAY_NORMAL);
+}
+
+void scrollOLED(const byte value)
+{
+  sendCommand(SET_OFFSET);
+  sendDataByte(value);
 }
 
 void sendCommand(const byte value)
@@ -57,7 +72,7 @@ void clearScreen(const int backgroundColor) {
   unsigned char buffer[GLOBAL_BUFFER_SIZE];
   
   sendCommand(SET_COLUMN_ADDRESS);
-  sendDataWord(0x77);
+  sendDataWord(OLED_SEG_NUM);
 
   sendCommand(SET_ROW_ADDRESS);
   sendDataWord(ROWS - 1);
@@ -71,16 +86,6 @@ void clearScreen(const int backgroundColor) {
     SPI.transfer(buffer, GLOBAL_BUFFER_SIZE);    
   };
   PORTB |= OLED_CS_SET;
-
-  //delay(500);
-  
-  /*for(i = 0; i < (COLUMNS / 2) * ROWS / 2; i++) {
-    //sendDataByte(backgroundColor | (backgroundColor << 4));
-    sendDataWord(backgroundColor | (backgroundColor << 4) 
-      | (backgroundColor << 8) | (backgroundColor << 12));
-  };*/
-  //delay(500);
-  //delete[] buffer;
 }
 
 void setSegs(const unsigned int x, const unsigned int y, const unsigned int color1,

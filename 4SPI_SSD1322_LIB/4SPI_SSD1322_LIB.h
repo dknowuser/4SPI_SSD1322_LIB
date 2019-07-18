@@ -42,22 +42,32 @@
 #define SET_SECOND_PRECH_PER    0xB6
 #define SET_GR_SCL_TABLE        0xB8
 #define SELECT_GR_SCL_TABLE     0xB9
-#define SET_PRECHARGE_VLTG      0xBB
+#define SET_PRECHARGE_VLTG         0xBB
 #define SET_VCOMH                  0xBE
 #define SET_CONTRAST_CURRENT       0xC1
 #define MASTER_CONTRAST_CURR_CTRL  0xC7
 #define SET_MUX_RATIO              0xCA
 #define SET_COMMAND_LOCK           0xFD
 
-#define DEL       500 // Delay
-#define COLUMNS   480
-#define ROWS      128
-#define MAX_SPI_SPEED 16000000
-#define GLOBAL_BUFFER_SIZE 7680 // Correct this value to free memory 
-                                // for global variables or to speed up OLED update
+#define DEL                 500 // Delay
+#define COLUMNS             480
+#define ROWS                128
+#define MAX_SPI_SPEED       16000000
+#define GLOBAL_BUFFER_SIZE  6144 // Correct this value to free memory 
+                                // for global variables or to speed up OLED update (30720 pixel pairs)
+#define OLED_SEG_NUM        0x77
+#define OLED_SEG_NUM_REAL   0x5B
 
 // Function for SPI and OLED initialization
 void initSPIandOLED(void);
+
+// Function for OLED contents inversion and normal mode
+void inverseOLED(void);
+void normalOLED(void);
+
+// Function for scrolling OLED contents
+// value should be in range 0-127
+void scrollOLED(const byte value);
 
 // Function for sending command to SSD1322
 void sendCommand(const byte value);
