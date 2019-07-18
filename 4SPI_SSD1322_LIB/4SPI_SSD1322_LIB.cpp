@@ -25,6 +25,21 @@ void initSPIandOLED(void)
   sendDataWord(0x7884);
   sendDataWord(0x909C);
   sendDataWord(0xA8B4);
+
+  sendCommand(SET_PHASE_LENGTH);
+  sendDataByte(0xFF);
+
+  sendCommand(SET_CLK_DIV_OSC_FREQ);
+  sendDataByte(0x00);
+
+  sendCommand(SET_SECOND_PRECH_PER);
+  sendDataByte(0x00);
+
+  sendCommand(SET_PRECHARGE_VLTG);
+  sendDataByte(0x3E);
+
+  sendCommand(SET_VCOMH);
+  sendDataByte(0x00);
 }
 
 void inverseOLED(void) 
@@ -93,14 +108,17 @@ void setSegs(const unsigned int x, const unsigned int y, const unsigned int colo
   unsigned int i = 0;
 
   sendCommand(SET_COLUMN_ADDRESS);
-  sendDataByte(x);
-  sendDataByte(119);
+  sendDataWord(OLED_SEG_NUM | (x << 8));
+  //sendDataByte(x);
+  //sendDataByte(119);
 
   sendCommand(SET_ROW_ADDRESS);
-  sendDataByte(y);
-  sendDataByte(127);
+  sendDataWord((ROWS - 1) | (y << 8));
+  //sendDataByte(y);
+  //sendDataByte(127);
 
   sendCommand(WRITE_RAM);
-  sendDataByte(color1);
-  sendDataByte(color2);
+  sendDataWord(color2 | (color1 << 8));
+  //sendDataByte(color1);
+  //sendDataByte(color2);
 }

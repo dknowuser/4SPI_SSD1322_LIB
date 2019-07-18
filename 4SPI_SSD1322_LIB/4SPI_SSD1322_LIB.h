@@ -54,9 +54,9 @@
 #define ROWS                128
 #define MAX_SPI_SPEED       16000000
 #define GLOBAL_BUFFER_SIZE  6144 // Correct this value to free memory 
-                                // for global variables or to speed up OLED update (30720 pixel pairs)
+                                 // for global variables or to speed up OLED update (30720 pixel pairs)
 #define OLED_SEG_NUM        0x77
-#define OLED_SEG_NUM_REAL   0x5B
+#define OLED_SEG_NUM_REAL   0x5C // Use this value for drawing
 
 // Function for SPI and OLED initialization
 void initSPIandOLED(void);
