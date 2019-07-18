@@ -53,6 +53,8 @@
 #define COLUMNS   480
 #define ROWS      128
 #define MAX_SPI_SPEED 16000000
+#define GLOBAL_BUFFER_SIZE 7680 // Correct this value to free memory 
+                                // for global variables or to speed up OLED update
 
 // Function for SPI and OLED initialization
 void initSPIandOLED(void);

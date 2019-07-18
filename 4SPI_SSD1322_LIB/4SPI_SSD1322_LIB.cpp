@@ -53,11 +53,8 @@ void sendDataWord(const word value)
 }
 
 void clearScreen(const int backgroundColor) {
-  unsigned int i = 0;
-  unsigned char buffer[(COLUMNS / 2) * ROWS];
-  buffer[0] = 0x0F;
-  /*for(i = 0; i < (COLUMNS / 2) * ROWS; i++)
-    buffer[i] = 0xFF;*/
+  unsigned int i = 0;  
+  unsigned char buffer[GLOBAL_BUFFER_SIZE];
   
   sendCommand(SET_COLUMN_ADDRESS);
   sendDataWord(0x77);
@@ -67,16 +64,23 @@ void clearScreen(const int backgroundColor) {
 
   sendCommand(WRITE_RAM);
 
-  /*PORTB |= OLED_DC_SET;
+  PORTB |= OLED_DC_SET;
   PORTB &= OLED_CS_CLEAR;
-  SPI.transfer(buffer, 1);
-  PORTB |= OLED_CS_SET;*/
+  for(i = 0; i < ((COLUMNS / 2) * ROWS) / GLOBAL_BUFFER_SIZE; i++) {
+    memset(buffer, (backgroundColor << 4) | backgroundColor, GLOBAL_BUFFER_SIZE);    
+    SPI.transfer(buffer, GLOBAL_BUFFER_SIZE);    
+  };
+  PORTB |= OLED_CS_SET;
+
+  //delay(500);
   
-  for(i = 0; i < (COLUMNS / 2) * ROWS / 2; i++) {
+  /*for(i = 0; i < (COLUMNS / 2) * ROWS / 2; i++) {
     //sendDataByte(backgroundColor | (backgroundColor << 4));
     sendDataWord(backgroundColor | (backgroundColor << 4) 
       | (backgroundColor << 8) | (backgroundColor << 12));
-  };
+  };*/
+  //delay(500);
+  //delete[] buffer;
 }
 
 void setSegs(const unsigned int x, const unsigned int y, const unsigned int color1,
