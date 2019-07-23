@@ -10,6 +10,10 @@ void setup() {
 
   for(i = 0; i < ROWS; i++)
     setSegs(50, i, 0xFF, 0xFF);
+
+  delay(500);
+  updateQuarter(TOP_LEFT);
+  updateQuarter(TOP_LEFT);
 }
 
 void loop() {

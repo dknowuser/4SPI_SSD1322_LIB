@@ -142,8 +142,37 @@ void updateScreen(void)
 
 void updateQuarter(const byte quarter)
 {
+  memset(quarterFrame, 0x00, GLOBAL_BUFFER_SIZE);
   switch(quarter) {
   case TOP_LEFT:
+    sendCommand(SET_COLUMN_ADDRESS);
+    sendDataWord(OLED_SEG_NUM / 2);
+  
+    sendCommand(SET_ROW_ADDRESS);
+    sendDataWord((ROWS - 1) / 4);    
     break;
+  }
+
+  drawQueue(quarter);
+  sendCommand(WRITE_RAM);
+  PORTB |= OLED_DC_SET;
+  PORTB &= OLED_CS_CLEAR; 
+  SPI.transfer(quarterFrame, GLOBAL_BUFFER_SIZE);    
+  PORTB |= OLED_CS_SET;
+}
+
+void drawQueue(const byte quarter)
+{
+  if(shapeQueue) {
+    ShapeElement *temp = shapeQueue;
+    while(temp) {
+      switch(temp->shape.type) {
+      case POINT:
+        break;
+      default:
+        break;
+      }
+      temp = temp->next;
+    }
   }
 }

@@ -64,11 +64,17 @@ enum {
   BOTTOM_LEFT, BOTTOM_RIGHT
 };
 
+// Enumeration for shape types
+enum ShapeType {
+  POINT
+};
+
 // Structure for storing shape parameters
 struct Shape {
   byte x1;
   byte y1;
   byte color;
+  const ShapeType type;
 };
 
 // Structure for shape queue element
@@ -115,6 +121,9 @@ void setSegs(const unsigned int x, const unsigned int y, const unsigned int colo
 
 // Function for deleting shape queue
 void deleteShapeQueue(void);
+
+// Function for drawing shape queue into global buffer
+void drawQueue(const byte quarter);
 
 // Buffer for drawing
 const static unsigned char quarterFrame[GLOBAL_BUFFER_SIZE];
