@@ -53,19 +53,29 @@
 #define COLUMNS             480
 #define ROWS                128
 #define MAX_SPI_SPEED       16000000
-#define GLOBAL_BUFFER_SIZE  6144 // Correct this value to free memory 
+#define GLOBAL_BUFFER_SIZE  7680 // Correct this value to free memory 
                                  // for global variables or to speed up OLED update (30720 pixel pairs)
 #define OLED_SEG_NUM        0x77
 #define OLED_SEG_NUM_REAL   0x5C // Use this value for drawing
 
+// Enumeration for frame quarters
+enum {
+  TOP_LEFT, TOP_RIGHT, 
+  BOTTOM_LEFT, BOTTOM_RIGHT
+};
+
 // Structure for storing shape parameters
-struct shape {
+struct Shape {
   byte x1;
   byte y1;
   byte color;
 };
 
 // Structure for shape queue element
+struct ShapeElement {
+  Shape shape;
+  ShapeElement *next;
+};
 
 // Function for SPI and OLED initialization
 void initSPIandOLED(void);
@@ -88,6 +98,12 @@ void sendDataWord(const word value);
 // Function for clearing screen
 void clearScreen(const int backgroundColor);
 
+// Function for updating screen
+void updateScreen(void);
+
+// Function for updating desired frame quarter
+void updateQuarter(const byte quarter);
+
 // Function for setting segment pair at (x; y) with desired color
 // x is offset of 1st segment pair
 // Lower half of color parameter is color of 1st pixel
@@ -96,5 +112,17 @@ void clearScreen(const int backgroundColor);
 // color2 is color for 2nd segment pair
 void setSegs(const unsigned int x, const unsigned int y, const unsigned int color1,
         const unsigned int color2);
+
+// Function for deleting shape queue
+void deleteShapeQueue(void);
+
+// Buffer for drawing
+const static unsigned char quarterFrame[GLOBAL_BUFFER_SIZE];
+
+// Shape queue for drawing and update
+static ShapeElement *shapeQueue = NULL;
+
+// Pointer to last shape queue element for fast insertion
+static ShapeElement *lastShape = NULL;
         
 #endif

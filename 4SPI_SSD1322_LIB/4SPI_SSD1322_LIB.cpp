@@ -87,7 +87,6 @@ void sendDataWord(const word value)
 
 void clearScreen(const int backgroundColor) {
   unsigned int i = 0;  
-  unsigned char buffer[GLOBAL_BUFFER_SIZE];
   
   sendCommand(SET_COLUMN_ADDRESS);
   sendDataWord(OLED_SEG_NUM);
@@ -99,14 +98,17 @@ void clearScreen(const int backgroundColor) {
   PORTB |= OLED_DC_SET;
   PORTB &= OLED_CS_CLEAR;
   for(i = 0; i < ((COLUMNS / 2) * ROWS) / GLOBAL_BUFFER_SIZE; i++) {
-    memset(buffer, (backgroundColor << 4) | backgroundColor, GLOBAL_BUFFER_SIZE);    
-    SPI.transfer(buffer, GLOBAL_BUFFER_SIZE);    
+    memset(quarterFrame, (backgroundColor << 4) | backgroundColor, GLOBAL_BUFFER_SIZE);    
+    SPI.transfer(quarterFrame, GLOBAL_BUFFER_SIZE);    
   };
   PORTB |= OLED_CS_SET;
+
+  deleteShapeQueue();
 }
 
 void setSegs(const unsigned int x, const unsigned int y, const unsigned int color1,
-      const unsigned int color2) {
+      const unsigned int color2)
+{
   unsigned int i = 0;
 
   sendCommand(SET_COLUMN_ADDRESS);
@@ -117,4 +119,31 @@ void setSegs(const unsigned int x, const unsigned int y, const unsigned int colo
 
   sendCommand(WRITE_RAM);
   sendDataWord(color2 | (color1 << 8));
+}
+
+void deleteShapeQueue(void)
+{
+  if(shapeQueue) {
+    lastShape = NULL;
+    ShapeElement *temp;
+
+    while(shapeQueue) {
+      temp = shapeQueue;
+      shapeQueue = shapeQueue->next;
+      delete temp;
+    }
+  };
+}
+
+void updateScreen(void)
+{
+  updateQuarter(TOP_LEFT);
+}
+
+void updateQuarter(const byte quarter)
+{
+  switch(quarter) {
+  case TOP_LEFT:
+    break;
+  }
 }
