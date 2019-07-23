@@ -74,7 +74,7 @@ struct Shape {
   byte x1;
   byte y1;
   byte color;
-  const ShapeType type;
+  ShapeType type;
 };
 
 // Structure for shape queue element
@@ -105,10 +105,10 @@ void sendDataWord(const word value);
 void clearScreen(const int backgroundColor);
 
 // Function for updating screen
-void updateScreen(void);
+void updateScreen(const int backgroundColor);
 
 // Function for updating desired frame quarter
-void updateQuarter(const byte quarter);
+void updateQuarter(const byte quarter, const int backgroundColor);
 
 // Function for setting segment pair at (x; y) with desired color
 // x is offset of 1st segment pair
@@ -116,22 +116,29 @@ void updateQuarter(const byte quarter);
 // Higher half of color parameter is color of 2nd pixel
 // color1 is color for 1st segment pair
 // color2 is color for 2nd segment pair
+// DO NOT USE THIS FUNCTION
 void setSegs(const unsigned int x, const unsigned int y, const unsigned int color1,
         const unsigned int color2);
 
 // Function for deleting shape queue
 void deleteShapeQueue(void);
+void addShapeQueueElement(const Shape *shape);
 
 // Function for drawing shape queue into global buffer
 void drawQueue(const byte quarter);
 
 // Buffer for drawing
-const static unsigned char quarterFrame[GLOBAL_BUFFER_SIZE];
+static unsigned char quarterFrame[GLOBAL_BUFFER_SIZE];
 
 // Shape queue for drawing and update
 static ShapeElement *shapeQueue = NULL;
 
 // Pointer to last shape queue element for fast insertion
 static ShapeElement *lastShape = NULL;
-        
+
+//--------------------------------------------------------
+// Functions for adding elements in shape queue
+
+// Function for adding point
+void setPoint(const unsigned x, const unsigned y, const unsigned color);
 #endif

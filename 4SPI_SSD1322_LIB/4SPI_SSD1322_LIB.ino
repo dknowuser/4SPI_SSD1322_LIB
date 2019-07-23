@@ -8,12 +8,11 @@ void setup() {
 
   clearScreen(0x00);
 
-  for(i = 0; i < ROWS; i++)
-    setSegs(50, i, 0xFF, 0xFF);
+  /*for(i = 0; i < ROWS; i++)
+    setSegs(50, i, 0xFF, 0xFF);*/
 
-  delay(500);
-  updateQuarter(TOP_LEFT);
-  updateQuarter(TOP_LEFT);
+  setPoint(50, 50, 0x0F);
+  updateScreen(0x00);
 }
 
 void loop() {

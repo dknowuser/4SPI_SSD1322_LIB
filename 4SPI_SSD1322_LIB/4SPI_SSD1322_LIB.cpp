@@ -135,14 +135,38 @@ void deleteShapeQueue(void)
   };
 }
 
-void updateScreen(void)
+void addShapeQueueElement(const Shape *shape) 
 {
-  updateQuarter(TOP_LEFT);
+  if(shapeQueue) {
+    lastShape->next = new ShapeElement;
+    if(!lastShape->next)
+      return;
+  }
+  else {
+    shapeQueue = new ShapeElement;
+    if(!shapeQueue)
+      return;
+      
+    lastShape = shapeQueue;
+  };
+  lastShape->shape.x1 = shape->x1;
+  lastShape->shape.y1 = shape->y1;
+  lastShape->shape.color = shape->color;
+  lastShape->shape.type = shape->type;
+  lastShape->next = NULL;
 }
 
-void updateQuarter(const byte quarter)
+void updateScreen(const int backgroundColor)
 {
-  memset(quarterFrame, 0x00, GLOBAL_BUFFER_SIZE);
+  updateQuarter(TOP_LEFT, backgroundColor);
+  updateQuarter(TOP_RIGHT, backgroundColor);
+  updateQuarter(BOTTOM_LEFT, backgroundColor);
+  updateQuarter(BOTTOM_RIGHT, backgroundColor);
+}
+
+void updateQuarter(const byte quarter, const int backgroundColor)
+{
+  memset(quarterFrame, backgroundColor | backgroundColor << 4, GLOBAL_BUFFER_SIZE);
   switch(quarter) {
   case TOP_LEFT:
     sendCommand(SET_COLUMN_ADDRESS);
@@ -150,6 +174,30 @@ void updateQuarter(const byte quarter)
   
     sendCommand(SET_ROW_ADDRESS);
     sendDataWord((ROWS - 1) / 4);    
+    break;
+    
+  case TOP_RIGHT:
+    sendCommand(SET_COLUMN_ADDRESS);
+    sendDataWord(OLED_SEG_NUM | ((OLED_SEG_NUM / 2) << 8));
+  
+    sendCommand(SET_ROW_ADDRESS);
+    sendDataWord((ROWS - 1) / 4);    
+    break;
+
+  case BOTTOM_LEFT:
+    sendCommand(SET_COLUMN_ADDRESS);
+    sendDataWord(OLED_SEG_NUM / 2);
+  
+    sendCommand(SET_ROW_ADDRESS);
+    sendDataWord(((ROWS - 1) / 2) | (((ROWS - 1) / 4) << 8));    
+    break;
+
+  case BOTTOM_RIGHT:
+    sendCommand(SET_COLUMN_ADDRESS);
+    sendDataWord(OLED_SEG_NUM | ((OLED_SEG_NUM / 2) << 8));
+  
+    sendCommand(SET_ROW_ADDRESS);
+    sendDataWord(((ROWS - 1) / 2) | (((ROWS - 1) / 4) << 8));    
     break;
   }
 
@@ -163,16 +211,37 @@ void updateQuarter(const byte quarter)
 
 void drawQueue(const byte quarter)
 {
-  if(shapeQueue) {
+  quarterFrame[0] = 0xFFFF;
+  /*if(shapeQueue) {
     ShapeElement *temp = shapeQueue;
     while(temp) {
       switch(temp->shape.type) {
       case POINT:
+        switch(quarter) {
+        case TOP_LEFT:
+          quarterFrame[100] = 0xFF;
+          /*if((temp->shape.x1 < (OLED_SEG_NUM / 2)) && (temp->shape.y1 < ((ROWS - 1) / 4))) {
+              quarterFrame[temp->shape.y1 * (COLUMNS / 2) / 2 + temp->shape.x1] = (temp->shape.color & 0x0F)
+                              << (4 * !(temp->shape.x1 % 2));
+          }*/
+          /*break;
+        }
         break;
       default:
         break;
       }
       temp = temp->next;
     }
-  }
+  }*/
+}
+
+void setPoint(const unsigned x, const unsigned y, const unsigned color)
+{
+  Shape shape;
+  shape.x1 = x;
+  shape.y1 = y;
+  shape.color = color;
+  shape.type = POINT;
+
+  addShapeQueueElement(&shape);
 }
