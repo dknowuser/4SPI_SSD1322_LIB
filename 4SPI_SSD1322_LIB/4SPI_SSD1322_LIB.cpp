@@ -40,6 +40,9 @@ void initSPIandOLED(void)
 
   sendCommand(SET_VCOMH);
   sendDataByte(0x00);
+
+  sendCommand(REMAP_DUAL_COM);
+  sendDataByte(0x02);
 }
 
 void inverseOLED(void) 
@@ -93,7 +96,6 @@ void clearScreen(const int backgroundColor) {
   sendDataWord(ROWS - 1);
 
   sendCommand(WRITE_RAM);
-
   PORTB |= OLED_DC_SET;
   PORTB &= OLED_CS_CLEAR;
   for(i = 0; i < ((COLUMNS / 2) * ROWS) / GLOBAL_BUFFER_SIZE; i++) {
@@ -109,16 +111,10 @@ void setSegs(const unsigned int x, const unsigned int y, const unsigned int colo
 
   sendCommand(SET_COLUMN_ADDRESS);
   sendDataWord(OLED_SEG_NUM | (x << 8));
-  //sendDataByte(x);
-  //sendDataByte(119);
 
   sendCommand(SET_ROW_ADDRESS);
   sendDataWord((ROWS - 1) | (y << 8));
-  //sendDataByte(y);
-  //sendDataByte(127);
 
   sendCommand(WRITE_RAM);
   sendDataWord(color2 | (color1 << 8));
-  //sendDataByte(color1);
-  //sendDataByte(color2);
 }

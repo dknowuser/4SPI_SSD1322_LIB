@@ -3,7 +3,7 @@
 
 #include <SPI.h>
 
-// (0; 0) is at upper right corner
+// (0; 0) is at upper left corner
 
 // Arduino Mega 2560 pin defines
 #define RES       10
@@ -12,7 +12,7 @@
 #define OLED_SDIN 51
 #define OLED_SCLK 52
 
-#define RES_PIN_SET B00010000
+#define RES_PIN_SET   B00010000
 #define OLED_CS_SET   B00100000
 #define OLED_CS_CLEAR B11011111
 #define OLED_DC_SET   B01000000
@@ -57,6 +57,15 @@
                                  // for global variables or to speed up OLED update (30720 pixel pairs)
 #define OLED_SEG_NUM        0x77
 #define OLED_SEG_NUM_REAL   0x5C // Use this value for drawing
+
+// Structure for storing shape parameters
+struct shape {
+  byte x1;
+  byte y1;
+  byte color;
+};
+
+// Structure for shape queue element
 
 // Function for SPI and OLED initialization
 void initSPIandOLED(void);
