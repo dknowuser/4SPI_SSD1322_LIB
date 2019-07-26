@@ -1930,14 +1930,7 @@ void setup() {
 
   clearScreen(0x00);
 
-  /*for(i = 0; i < ROWS; i++)
-    setSegs(50, i, 0xFF, 0xFF);*/
-
-  //setPoint(50, 50, 0x0F);
-  //updateScreen(0x00);
-
   sendCommand(WRITE_RAM);
-  //while(1)
   for(i = 0; i < GLOBAL_BUFFER_SIZE*4; i+=4) {
     byte temp_byte1, temp_byte2, temp_byte3, temp_byte4, temp;
     temp_byte1 = pgm_read_byte(SS2EGAME + i);
@@ -1948,26 +1941,8 @@ void setup() {
     sendDataByte(temp_byte2);
     sendDataByte(temp_byte1);
     sendDataByte(temp_byte4);
-    sendDataByte(temp_byte3);
-    
-    
-    /*word temp_word1 = pgm_read_word(SS2EGAME + i);
-    word temp_word2 = pgm_read_word(SS2EGAME + i + 2);
-    word temp = temp_word1;
-
-    temp_word1 = temp_word2;
-    temp_word2 = temp;
-
-    sendDataWord(temp_word1);
-    sendDataWord(temp_word2);*/
-    
-    //sendDataByte(pgm_read_byte(SS2EGAME + i));
+    sendDataByte(temp_byte3);    
   };
-  /*PORTB |= OLED_DC_SET;
-  PORTB &= OLED_CS_CLEAR;
-  SPI.transfer(image, GLOBAL_BUFFER_SIZE / 2);    
-  PORTB |= OLED_CS_SET;*/
-
 }
 
 void loop() {
