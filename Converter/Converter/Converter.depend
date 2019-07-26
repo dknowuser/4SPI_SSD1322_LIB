@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1564164084 source:e:\sidequests\projects\sketch_jul08a\converter\converter\main.cpp
+	<iostream>
+	"EasyBMP.h"
+	<fstream>
+
+1164963935 e:\sidequests\projects\sketch_jul08a\converter\converter\easybmp.h
+	<iostream>
+	<cmath>
+	<cctype>
+	<cstring>
+	<stdio.h>
+	<cstdio>
+	"EasyBMP_DataStructures.h"
+	"EasyBMP_BMP.h"
+	"EasyBMP_VariousBMPutilities.h"
+
+1164963753 e:\sidequests\projects\sketch_jul08a\converter\converter\easybmp_datastructures.h
+
+1164964831 e:\sidequests\projects\sketch_jul08a\converter\converter\easybmp_bmp.h
+
+1164963762 e:\sidequests\projects\sketch_jul08a\converter\converter\easybmp_variousbmputilities.h
+
+1164964967 source:e:\sidequests\projects\sketch_jul08a\converter\converter\easybmp.cpp
+	"EasyBMP.h"
+
