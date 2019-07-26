@@ -42,7 +42,9 @@ void initSPIandOLED(void)
   sendDataByte(0x00);
 
   sendCommand(REMAP_DUAL_COM);
-  sendDataByte(0x02);
+  sendDataByte(0x22);
+  sendDataByte(0x01);
+  //sendDataWord(0x0201);
 }
 
 void inverseOLED(void) 
@@ -166,22 +168,21 @@ void updateScreen(const int backgroundColor)
 
 void updateQuarter(const byte quarter, const int backgroundColor)
 {
-  memset(quarterFrame, backgroundColor | backgroundColor << 4, GLOBAL_BUFFER_SIZE);
   switch(quarter) {
   case TOP_LEFT:
     sendCommand(SET_COLUMN_ADDRESS);
     sendDataWord(OLED_SEG_NUM / 2);
   
     sendCommand(SET_ROW_ADDRESS);
-    sendDataWord((ROWS - 1) / 4);    
+    sendDataWord(ROWS / 4 - 1);    
     break;
     
   case TOP_RIGHT:
     sendCommand(SET_COLUMN_ADDRESS);
-    sendDataWord(OLED_SEG_NUM | ((OLED_SEG_NUM / 2) << 8));
+    sendDataWord(OLED_SEG_NUM - 1 | ((OLED_SEG_NUM / 2) << 8));
   
     sendCommand(SET_ROW_ADDRESS);
-    sendDataWord((ROWS - 1) / 4);    
+    sendDataWord(ROWS / 4 - 1);    
     break;
 
   case BOTTOM_LEFT:
@@ -189,15 +190,15 @@ void updateQuarter(const byte quarter, const int backgroundColor)
     sendDataWord(OLED_SEG_NUM / 2);
   
     sendCommand(SET_ROW_ADDRESS);
-    sendDataWord(((ROWS - 1) / 2) | (((ROWS - 1) / 4) << 8));    
+    sendDataWord((ROWS / 2 - 1) | ((ROWS / 4) << 8));    
     break;
 
   case BOTTOM_RIGHT:
     sendCommand(SET_COLUMN_ADDRESS);
-    sendDataWord(OLED_SEG_NUM | ((OLED_SEG_NUM / 2) << 8));
+    sendDataWord(OLED_SEG_NUM - 1 | ((OLED_SEG_NUM / 2) << 8));
   
     sendCommand(SET_ROW_ADDRESS);
-    sendDataWord(((ROWS - 1) / 2) | (((ROWS - 1) / 4) << 8));    
+    sendDataWord((ROWS / 2 - 1) | ((ROWS / 4) << 8));    
     break;
   }
 
@@ -211,20 +212,19 @@ void updateQuarter(const byte quarter, const int backgroundColor)
 
 void drawQueue(const byte quarter)
 {
-  quarterFrame[0] = 0xFFFF;
-  /*if(shapeQueue) {
+  if(shapeQueue) {
     ShapeElement *temp = shapeQueue;
     while(temp) {
       switch(temp->shape.type) {
       case POINT:
         switch(quarter) {
         case TOP_LEFT:
-          quarterFrame[100] = 0xFF;
+          quarterFrame[GLOBAL_BUFFER_SIZE - 1] = 0xFF;
           /*if((temp->shape.x1 < (OLED_SEG_NUM / 2)) && (temp->shape.y1 < ((ROWS - 1) / 4))) {
               quarterFrame[temp->shape.y1 * (COLUMNS / 2) / 2 + temp->shape.x1] = (temp->shape.color & 0x0F)
                               << (4 * !(temp->shape.x1 % 2));
           }*/
-          /*break;
+          break;
         }
         break;
       default:
@@ -232,7 +232,7 @@ void drawQueue(const byte quarter)
       }
       temp = temp->next;
     }
-  }*/
+  }
 }
 
 void setPoint(const unsigned x, const unsigned y, const unsigned color)
